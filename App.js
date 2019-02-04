@@ -1,0 +1,34 @@
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import BackgroundImage from './application/components/BackgroundImage';
+import Start from './application/screens/Start';
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <BackgroundImage
+          source = {require('./assets/images/login-bg.png')}
+          >
+          <Start />
+
+        </BackgroundImage>
+
+
+
+
+
+
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
