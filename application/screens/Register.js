@@ -9,12 +9,22 @@ const Form = t.form.Form;
 import * as firebase from 'firebase';
 import Toast from 'react-native-simple-toast';
 
-export default class Login extends Component {
+export default class Register extends Component {
   constructor () {
     super();
+    this.state = {
+      user: {
+        email: '',
+        password: ''
+      }
+    };
+    this.samePassword = t.refinement(t.String, (s) => {
+      return s === this.state.user.password
+    });
     this.user = t.struct({
       email: FormValidation.email,
       password: FormValidation.password,
+      confirmar_password: this.samePassword
     });
     this.options = {
       fields: {
@@ -28,50 +38,49 @@ export default class Login extends Component {
           error: 'Password incorrecto',
           password: true,
           secureTextEntry: true,
+        },
+        confirmar_password: {
+          help: 'Repite tu password',
+          error: 'Los password no coinciden',
+          password: true,
+          secureTextEntry: true,
         }
       }
     };
+    this.validate = null;
   }
 
-  login () {
-    const validate = this.refs.form.getValue();
-    if (validate) {
-      firebase.auth().signInWithEmailAndPassword(validate.email,validate.password)
-      .then(()=>{
-        Toast.showWithGravity("Bienvenido", Toast.LONG, Toast.BOTTOM);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        if (errorCode === 'auth/wrong-password') {
-          Toast.showWithGravity("Passord incorrecto", Toast.LONG, Toast.BOTTOM);
-        } else {
-          Toast.showWithGravity(errorMessage, Toast.LONG, Toast.BOTTOM);
-        }
+  register(){
+    this.validate = this.refs.form.getValue();
+    if (this.validate) {
 
-      });
     }
-
   }
 
-  render (){
+  onChange (user){
+    this.setState({user});
+  }
+
+  render () {
     return (
       <BackgroundImage source={require('../../assets/images/login-bg.png')}>
       <View >
-        <Card wrapperStyle={{paddingLeft: 10}} title="Iniciar sesion">
+        <Card wrapperStyle={{paddingLeft: 10}} title="Regístrate">
           <Form
             ref="form"
             type={this.user}
             options={this.options}
+            onChange={(v) => this.onChange(v)}
+            value={this.state.user}
             />
             <AppButton
-  						bgColor="rgba(111, 38, 74, 0.7)"
-  						title="Login "
-  						action={this.login.bind(this)}
-  						iconName="sign-in"
-  						iconSize={30}
-  						iconColor="#fff"
-  					/>
+              bgColor="rgba(111, 38, 74, 0.7)"
+              title="Registrarme "
+              action={this.register.bind(this)}
+              iconName="user-plus"
+              iconSize={30}
+              iconColor="#fff"
+            />
 
 
 
@@ -81,6 +90,11 @@ export default class Login extends Component {
 
 
       </BackgroundImage>
+
     );
+
   }
+
+
+
 }
