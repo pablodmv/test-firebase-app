@@ -7,9 +7,16 @@ import Toast from 'react-native-simple-toast';
 import * as firebase from 'firebase';
 
 export default class Start extends Component {
+	static navigationOptions={
+		title: 'Expo App'
+	}
 
 
 	login () {
+		const navigateAction = NavigationActions.navigate({
+			routeName: 'Login'
+		});
+		this.props.navigation.dispatch(navigateAction)
 
 	}
 

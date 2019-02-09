@@ -8,7 +8,7 @@ export default class AppButton extends Component {
     const {action, iconName,iconColor, title,bgColor} = this.props;
     const {width} = Dimensions.get('window');
     return (
-      <Button 
+      <Button
         onPress = {action}
         buttonStyle = {{
           backgroundColor: bgColor,
@@ -18,6 +18,10 @@ export default class AppButton extends Component {
           borderRadius: 5,
           marginBottom: 5,
           width: width
+        }}
+        containerStyle={{
+          opacity: 0.8,
+          backgroundColor: bgColor
         }}
         title = {title}
         icon = {
