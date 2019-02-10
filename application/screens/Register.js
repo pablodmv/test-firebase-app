@@ -51,14 +51,20 @@ export default class Register extends Component {
   }
 
   register(){
-    this.validate = this.refs.form.getValue();
     if (this.validate) {
-
+      firebase.auth().createUserWithEmailAndPassword(this.validate.email, this.validate.password)
+      .then(()=> {
+        Toast.showWithGravity("Registro correcto, Bienvenido!", Toast.LONG, Toast.BOTTOM);
+      })
+      .catch((error) => {
+        Toast.showWithGravity(error.message, Toast.LONG, Toast.BOTTOM);
+      })
     }
   }
 
   onChange (user){
     this.setState({user});
+    this.validate = this.refs.form.getValue();
   }
 
   render () {
