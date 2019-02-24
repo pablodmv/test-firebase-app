@@ -2,6 +2,7 @@ import React from 'react';
 import {Text} from 'react-native-elements';
 import PreLoader from "./application/components/PreLoader";
 import GuestNavigation from './application/navigations/guest';
+import LoggedNavigation from './application/navigations/logged';
 import firebaseConfig from './application/utils/firebase';
 import * as firebase from 'firebase';
 firebase.initializeApp(firebaseConfig);
@@ -42,7 +43,8 @@ export default class App extends React.Component {
     }
     if (isLogged) {
       /*return(<Text>Tas loggeado papa</Text>);*/
-      return(<RestaurantEmpty text="piijiiiiiiin"/>)
+      //return(<RestaurantEmpty text="piijiiiiiiin"/>)
+      return (<LoggedNavigation />)
     } else {
       return (
           <GuestNavigation/>
